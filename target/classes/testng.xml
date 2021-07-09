@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="RegressionSuite">
+
+  <listeners>
+  <listener class-name = "com.qa.ExtentReportListener.ExtentReporterNG" ></listener>
+  </listeners>
+   <test thread-count="5" name="RegressionTest">
+    <classes>
+      <class name="com.Yandex.qa.testcases.HomePageTest"/>
+      <class name="com.Yandex.qa.testcases.LoginPageTest"/>
+      <class name="com.Yandex.qa.testcases.CheckoutPageTest"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- RegressionSuite -->
