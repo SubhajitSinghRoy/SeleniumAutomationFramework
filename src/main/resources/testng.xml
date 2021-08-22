@@ -6,10 +6,13 @@
   <listener class-name = "com.qa.ExtentReportListener.ExtentReporterNG" ></listener>
   </listeners>
    <test thread-count="5" name="RegressionTest">
+   <parameter name="itemName" value="Sauce Labs Bolt T-Shirt"></parameter>
     <classes>
-      <class name="com.Yandex.qa.testcases.HomePageTest"/>
       <class name="com.Yandex.qa.testcases.LoginPageTest"/>
+      <class name="com.Yandex.qa.testcases.HomePageTest"/>
+      <class name="com.Yandex.qa.testcases.CartPageTest"/>
       <class name="com.Yandex.qa.testcases.CheckoutPageTest"/>
+      <class name="com.Yandex.qa.testcases.CartPageTestByDataProvider"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- RegressionSuite -->
