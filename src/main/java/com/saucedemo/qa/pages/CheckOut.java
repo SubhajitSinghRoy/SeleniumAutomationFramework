@@ -1,7 +1,6 @@
 package com.saucedemo.qa.pages;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -21,22 +20,29 @@ public class CheckOut extends TestBase {
 	@FindBy(id ="continue")
 	WebElement continueBtn;
 	
+	@FindBy(id="cancel")
+	WebElement cancelBtn;
+	
+	public WebElement getContinueBtn() {
+		return continueBtn;
+	}
+
+
+
+	public WebElement getCancelBtn() {
+		return cancelBtn;
+	}
+
+
+
 	public ContinuePage clickContinue()
 	{
-		Actions action=new Actions(driver);
-		action.moveToElement(continueBtn);
-		action.perform();
+
 		continueBtn.click();
 		return new ContinuePage();
 	}
 	
-	public boolean presentContinue()
-	{
-		Actions action=new Actions(driver);
-		action.moveToElement(continueBtn);
-		action.perform();
-		return continueBtn.isDisplayed();
-	}
+
 	
 	public CheckOut()
 	{
