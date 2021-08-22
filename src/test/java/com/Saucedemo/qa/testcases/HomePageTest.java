@@ -24,19 +24,19 @@ public void setUp() {
 		homePage= loginPage.login(prop.getProperty("username"),prop.getProperty("password"));
 	}
 	
-	@Test(priority=2,description = "Testcase 5 : ")
+	@Test(priority=2,description = "Testcase 5 : Page Title Validation")
 	public void homePageTitleTest() throws InterruptedException
 	{
 		Assert.assertEquals(driver.getTitle(),"Swag Labs", "title did not match");
 		Thread.sleep(4000);
 	}
 	
-	@Test(priority=1,description = "Testcase 4 : URL Validation(HomePage)")
+	@Test(priority=1,description = "Testcase 6 : URL Validation(HomePage)")
 	public void cartLinkCheck()
 	{
 	
 		cartPage= homePage.goToCart();
-	Assert.assertEquals(driver.getCurrentUrl(),"https://www.saucedemo.com/cart.html","Link did not match");
+	Assert.assertEquals(driver.getCurrentUrl(),"https://www.saucedemo.com/cart.html","URL did not match");
 		
 	}
 	
