@@ -21,8 +21,8 @@ public class CheckoutPageTest extends TestBase{
 	CartPage cartPage;
 	CheckOut checkOut;
  String sheetName = "CheckoutInfo";
- public static String TEST_DATA_PATH = "C:\\Users\\User\\Eclipse workspace 2019\\SeleniumAutomationFramework\\"
-			+ "src\\main\\java\\com\\Yandex\\qa\\testData\\TestData.xlsx";
+ public static String TEST_DATA_PATH = System.getProperty("user.dir")+
+			"\\src\\main\\java\\com\\saucedemo\\qa\\testData\\TestData.xlsx";
 	
 	@BeforeMethod
 	void setUp()
@@ -36,10 +36,17 @@ public class CheckoutPageTest extends TestBase{
 		checkOut=cartPage.gotoCheckoutPage();
 		
 	}
-	@Test
+	
+	@Test(description = "TestCase 7 : Continue Button is displayed")
 	public void validateContinueBtn()
 	{
-		Assert.assertTrue(checkOut.presentContinue());
+		Assert.assertTrue(checkOut.getContinueBtn().isDisplayed());
+	}
+	
+	@Test(description = "TestCase 8 : Cancel Button is displayed")
+	public void validateCancelBtn()
+	{
+		Assert.assertTrue(checkOut.getCancelBtn().isDisplayed());
 	}
 	
 	@DataProvider
@@ -50,13 +57,21 @@ public class CheckoutPageTest extends TestBase{
 	}
 	
 	
-	// 
-	@Test(dataProvider = "getdata")
+	@Test(dataProvider = "getdata",
+			description = "TestCase 9 : Validate page flow after entering user details and clicking Continue")
 	public void checkoutSuccess(String fname,String lname,String zcode)
 	{
 	checkOut.addCheckoutInfo(fname, lname, zcode);
 	checkOut.clickContinue();
 	Assert.assertTrue((driver.getCurrentUrl().contentEquals("https://www.saucedemo.com/checkout-step-two.html")),"url did not match");
+	}
+	
+	
+	@Test(description = "TestCase 10 : Validate movement to previous page after clicking Cancel")
+	public void cancelBtnWorking()
+	{
+	checkOut.getCancelBtn().click();
+	Assert.assertTrue((driver.getCurrentUrl().contentEquals("https://www.saucedemo.com/cart.html")),"url did not match");
 	}
 	
 	@AfterMethod
