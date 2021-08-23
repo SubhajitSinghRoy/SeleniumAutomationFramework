@@ -5,10 +5,12 @@
   <listener class-name = "com.saucedemo.qa.ExtentReportListener.ExtentReporterNG" ></listener>
    <listener class-name="com.saucedemo.qa.util.AnnotationTransformer" ></listener>
 </listeners>
-   <test thread-count="5" name="FunctionalTest">
+   <test thread-count="5" name="CartPageTestCases">
    <parameter name="itemName" value="Sauce Labs Bolt T-Shirt"></parameter>
     <classes>
       <class name="com.Saucedemo.qa.testcases.CartPageTest"/>
+      <class name="com.Saucedemo.qa.testcases.CartPageTestByXLSXvalues"/>
+      <class name="com.Saucedemo.qa.testcases.CartPageTestByMultipleItem"/>  
     </classes>
   </test> <!-- Test -->
 </suite> <!-- RegressionSuite -->
