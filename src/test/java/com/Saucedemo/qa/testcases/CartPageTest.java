@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.beust.jcommander.Parameter;
 import com.saucedemo.qa.base.TestBase;
 import com.saucedemo.qa.pages.CartPage;
 import com.saucedemo.qa.pages.HomePage;
@@ -29,7 +30,9 @@ public class CartPageTest extends TestBase {
 		homePage= loginPage.login(prop.getProperty("username"),prop.getProperty("password")); 	
 	}	
 	
-	@Test
+	
+	@Test(priority=1, 
+				  description = "TestCase 18 : Validation of number of items in Cart Page as per selection in Home Page(data from xml file)") 
 	@Parameters({("itemName")})
 	public void cartListCheck(String itemName) throws InterruptedException
 	{
@@ -41,7 +44,11 @@ public class CartPageTest extends TestBase {
 	
    }
 	
-	@Test
+	
+	
+	  @Test
+		(priority=2, 
+		description = "TestCase 19 : Validation of appearance of detail links of items present in the Cart Page(data from xml file)")
 	@Parameters({("itemName")})
 	public void itemLinkisPresent(String itemName) {
 		
@@ -50,7 +57,22 @@ public class CartPageTest extends TestBase {
 		Assert.assertTrue(cartPage.itemLinkExists(itemName));
 	}
 	
-	@Test
+	  
+	  @Test  
+		(priority=3, 
+				description = "TestCase 20 : Validation of appearance of price details of items present in the Cart Page(data from xml file)")
+		@Parameters({("itemName")})
+		public void itemPriceBarisPresent(String itemName)
+		{
+			homePage.addItemstoCart(itemName); 
+			cartPage= homePage.goToCart();
+			Assert.assertTrue(cartPage.itemPriceBarExists(itemName));
+		}
+
+	  
+	  @Test
+		(priority=4, 
+				description = "TestCase 21 : Validation of presence of item Description in the Cart Page(data from xml file)")  
 	@Parameters({("itemName")})
 	public void itemDescisPresent(String itemName)
 	{
@@ -60,15 +82,6 @@ public class CartPageTest extends TestBase {
 	}
 	
 	
-	@Test
-	@Parameters({("itemName")})
-	public void itemPriceBarisPresent(String itemName)
-	{
-		homePage.addItemstoCart(itemName); 
-		cartPage= homePage.goToCart();
-		Assert.assertTrue(cartPage.itemPriceBarExists(itemName));
-	}
-
 	
 	
 	@AfterMethod
