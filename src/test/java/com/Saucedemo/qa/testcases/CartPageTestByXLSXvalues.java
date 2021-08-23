@@ -22,14 +22,16 @@ public class CartPageTestByXLSXvalues extends TestBase {
 	CartPage cartPage;
 	
 	static String sheetName="cartItemNames";
-	static String TEST_DATA_PATH="C:\\Users\\User\\Eclipse workspace 2019\\SeleniumAutomationFramework\\"
-			+ "src\\main\\java\\com\\saucedemo\\qa\\testData\\ProductNames.xlsx";
+	static String TEST_DATA_PATH= System.getProperty("user.dir")
+			+ "\\src\\main\\java\\com\\saucedemo\\qa\\testData\\ProductNames.xlsx";
 	
 	
-	  @BeforeMethod public void setUp() {
+	  @BeforeMethod 
+	  public void setUp() {
 	  
-	  initialization(); loginPage=new LoginPage(); homePage=
-	  loginPage.login(prop.getProperty("username"),prop.getProperty("password")); }
+	  initialization(); 
+	  loginPage=new LoginPage();
+	  homePage=loginPage.login(prop.getProperty("username"),prop.getProperty("password")); }
 	
 	 
 	 @DataProvider
@@ -40,9 +42,30 @@ public class CartPageTestByXLSXvalues extends TestBase {
 		}
 	 
 	
+	 @Test(dataProvider = "getdata", priority=1, 
+			  description = "TestCase 11 : Validation of number of items in Cart Page as per selection in Home Page(data from xlsx file)") 
+	  
+	  public void cartListCheck(String[] itemName) throws InterruptedException {
+	  
+	  int len=itemName.length; 
+	  int track=0; 
+	  while (track<len) 
+	  {
+	  if(itemName[track]==null) break;
+	  
+	  homePage.addItemstoCart(itemName[track]);
+	  track++; 
+	  } 
+	  cartPage= homePage.goToCart();
+	  
+	  Assert.assertEquals(cartPage.getCartItemList().size(),(track),"Number of items in cart didnot match");
+	  }
+	  
+	 
 	// Test case to verify the presence of all the item links
 	@Test
-	(dataProvider = "getdata")
+	(dataProvider = "getdata" , priority=2, 
+	description = "TestCase 12 : Validation of appearance of detail links of items present in the Cart Page(data from xlsx file)")
 	public void itemLinkisPresent(String[] itemName) {
 		
 	int len=itemName.length;
@@ -66,39 +89,10 @@ cartPage= homePage.goToCart();
 	
 	Assert.assertTrue(flag);}
 	
-	// Test case to verify the presence of all the item description
-	@Test
-	(dataProvider = "getdata")
-	  public void itemDescisPresent(String[] itemName) {
-	  
-	  
-	  int len=itemName.length; 
-	  boolean flag= false;
-	  int track=0;
-	  
-	  while (track<len) { 
-		  if (itemName[track]==null) break;
-		  homePage.addItemstoCart(itemName[track]); 
-		  track++; 
-		  }
-	  cartPage=homePage.goToCart(); 
-		  
-		  track=0;
-	  
-	  while (len>=1 ) {
-		  if (itemName[track]==null) break;
-		  flag = cartPage.itemDescPresent(itemName[track]);
-		  
-	  if
-	  (flag==false) break; else track++;}
-	  
-	  Assert.assertTrue(flag); }
-	  
-	  
-	 
-	  
-	  
-	  @Test (dataProvider = "getdata") 
+	
+	@Test  
+	(dataProvider = "getdata" , priority=3, 
+			description = "TestCase 13 : Validation of appearance of price details of items present in the Cart Page(data from xlsx file)")
 	  public void itemPriceBarisPresent(String[] itemName) {
 	  
 	  
@@ -123,28 +117,42 @@ cartPage= homePage.goToCart();
 	  
 	  Assert.assertTrue(flag); 
 	  }
-	  
-	  // Check the presence of accurate number in the Cart List
 	
-	  @Test (dataProvider = "getdata") public void cartListCheck(String[] itemName)
-	  throws InterruptedException {
+	@Test
+	(dataProvider = "getdata" , priority=4, 
+			description = "TestCase 14 : Validation of presence of item Description in the Cart Page(data from xlsx file)")
+	  public void itemDescisPresent(String[] itemName) {
+	  
 	  
 	  int len=itemName.length; 
-	  int track=0; 
-	  while (track<len) 
-	  {
-	  if(itemName[track]==null) break;
+	  boolean flag= false;
+	  int track=0;
 	  
-	  homePage.addItemstoCart(itemName[track]);
-	  track++; 
-	  } 
-	  cartPage= homePage.goToCart();
+	  while (track<len) { 
+		  if (itemName[track]==null) break;
+		  homePage.addItemstoCart(itemName[track]); 
+		  track++; 
+		  }
+	  cartPage=homePage.goToCart(); 
+		  
+		  track=0;
 	  
-	  Assert.assertEquals(cartPage.getCartItemList().size(),(track),"Number of items in cart didnot match");
+	  while (len>=1 ) {
+		  if (itemName[track]==null) break;
+		  flag = cartPage.itemDescPresent(itemName[track]);
+		  
+	  if
+	  (flag==false) break; 
+	  else track++;}
+	  
+	  Assert.assertTrue(flag); 
 	  }
-	  
 	 
-	  @AfterMethod void teardown() 
+	  // The items that are already selected is removed, so that they do not interfere with future test cases
+	  // as the same login credentials are used
+	  
+	  @AfterMethod 
+	  void teardown() 
 	  { 
 		  while
 	  (!driver.getCurrentUrl().equals("https://www.saucedemo.com/inventory.html"))

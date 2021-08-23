@@ -49,10 +49,28 @@ public class CartPageTestByMultipleItem extends TestBase {
 		  
 		  }
 	 
+	 @Test(dataProvider = "itemName", priority=1, 
+			  description = "TestCase 15 : Validation of number of items in Cart Page as per selection in Home Page(data from same file)") 
+			public void cartListCheck(String[] itemName) throws InterruptedException
+			{
+				int len=itemName.length;
+				
+				while (len>=1) {
+				homePage.addItemstoCart(itemName[len-1]);
+				len--;
+				}
+				cartPage= homePage.goToCart();
+			len=itemName.length;
+			
+
+			
+			Assert.assertEquals(cartPage.getCartItemList().size(), len,"Number of items in cart didnot match");
+		   }
+	 
+	 
 	
-	
-	@Test
-	//(dataProvider = "itemName")
+	 @Test(dataProvider = "itemName" , priority=2, 
+		description = "TestCase 16 : Validation of appearance of detail links of items present in the Cart Page(data from same file)")
 	public void itemLinkisPresent(String[] itemName) {
 		
 		
@@ -74,33 +92,12 @@ public class CartPageTestByMultipleItem extends TestBase {
 		Assert.assertTrue(flag);
 	}
 	
-	@Test
-	(dataProvider = "itemName")
-	public void itemDescisPresent(String[] itemName)
-	{
-		
-		
-	int len=itemName.length;
-		boolean flag= false;
-		
-		while (len>=1) {
-		homePage.addItemstoCart(itemName[len-1]);
-		len--;
-		}
-		cartPage= homePage.goToCart();
-		len=itemName.length;
-		
-		while (len>=1 ) {
-		flag = cartPage.itemDescPresent(itemName[len-1]);
-		if (flag==false) break;
-	else len--;}
-		
-		Assert.assertTrue(flag);
-	}
+	 
 	
 	
-	@Test
-//(dataProvider = "itemName")
+	@Test  
+	(dataProvider = "itemName" , priority=3, 
+			description = "TestCase 17 : Validation of appearance of price details of items present in the Cart Page(data from same file)")
 public void itemPriceBarisPresent(String[] itemName)
 	{
 	
@@ -123,23 +120,32 @@ public void itemPriceBarisPresent(String[] itemName)
 		Assert.assertTrue(flag);
 	}
 	
+	
 	@Test
-	//(dataProvider = "itemName")
-	public void cartListCheck(String[] itemName) throws InterruptedException
-	{
-		int len=itemName.length;
-		
-		while (len>=1) {
-		homePage.addItemstoCart(itemName[len-1]);
-		len--;
-		}
-		cartPage= homePage.goToCart();
+	(dataProvider = "itemName" , priority=4, 
+			description = "TestCase 18 : Validation of presence of item Description in the Cart Page(data from same file)")
+public void itemDescisPresent(String[] itemName)
+{
+	
+	
+int len=itemName.length;
+	boolean flag= false;
+	
+	while (len>=1) {
+	homePage.addItemstoCart(itemName[len-1]);
+	len--;
+	}
+	cartPage= homePage.goToCart();
 	len=itemName.length;
 	
-
+	while (len>=1 ) {
+	flag = cartPage.itemDescPresent(itemName[len-1]);
+	if (flag==false) break;
+else len--;}
 	
-	Assert.assertEquals(cartPage.getCartItemList().size(), len,"Number of items in cart didnot match");
-   }
+	Assert.assertTrue(flag);
+}
+	
 
 	@AfterMethod
 	void teardown()
